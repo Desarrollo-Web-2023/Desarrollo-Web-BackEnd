@@ -1,7 +1,17 @@
 import { NextFunction, Response } from 'express';
-import { createUserService } from './service';
+import {
+  createUserService,
+  getUserByIdService,
+  getUserService,
+  updateUserService
+} from './service';
 import { success } from '../../utils/response';
-import { CreateUserRequest } from './types';
+import {
+  CreateUserRequest,
+  GetUserByIdRequest,
+  GetUserFilterRequest,
+  UpdateUserRequest
+} from './types';
 
 const createUser = async (req: CreateUserRequest, res: Response, next: NextFunction) => {
   try {
@@ -13,4 +23,31 @@ const createUser = async (req: CreateUserRequest, res: Response, next: NextFunct
   }
 };
 
-export { createUser };
+const getUser = async (req: GetUserFilterRequest, res: Response, next: NextFunction) => {
+  try {
+    const user = await getUserService(req.query);
+    success(res, 200, 'Ok', user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getUserById = async (req: GetUserByIdRequest, res: Response, next: NextFunction) => {
+  try {
+    const user = await getUserByIdService(req.params.id);
+    success(res, 200, 'Ok', user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateUser = async (req: UpdateUserRequest, res: Response, next: NextFunction) => {
+  try {
+    const updatedUser = await updateUserService(req.params.id, req.body.preferences);
+    success(res, 200, 'User update successful', updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { createUser, getUser, getUserById, updateUser };

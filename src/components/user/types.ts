@@ -3,7 +3,7 @@ import { ObjectId } from 'mongoose';
 
 type UserModel = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  _id: ObjectId;
+  _id: ObjectId | string;
   name: string;
   email: string;
   preferences: string[];
@@ -11,8 +11,39 @@ type UserModel = {
 
 type CreateUserModel = Omit<UserModel, '_id'>;
 
+type FilterUserModel = {
+  name?: UserModel['name'];
+  email?: UserModel['email'];
+  preferences?: UserModel['preferences'] | { $in: UserModel['preferences'] };
+};
+
 interface CreateUserRequest extends Request {
   body: CreateUserModel;
 }
 
-export { UserModel, CreateUserModel, CreateUserRequest };
+interface GetUserFilterRequest extends Request {
+  query: FilterUserModel;
+}
+
+interface GetUserByIdRequest extends Request {
+  params: {
+    id: string;
+  };
+}
+
+interface UpdateUserRequest extends Request {
+  params: {
+    id: string;
+  };
+  body: Pick<UserModel, 'preferences'>;
+}
+
+export {
+  UserModel,
+  CreateUserModel,
+  CreateUserRequest,
+  FilterUserModel,
+  GetUserFilterRequest,
+  GetUserByIdRequest,
+  UpdateUserRequest
+};

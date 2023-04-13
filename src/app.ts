@@ -2,7 +2,12 @@ import express from 'express';
 import cors from 'cors';
 
 import { routers } from './router';
-import { errorHandler, logErrors, boomErrorHandler } from './middlewares/error.handler';
+import {
+  errorHandler,
+  logErrors,
+  boomErrorHandler,
+  mongoErrorHandler
+} from './middlewares/error.handler';
 
 import morgan from 'morgan';
 
@@ -22,6 +27,7 @@ const createApp = () => {
   // ERROR MIDDLEWARE
   app.use(logErrors);
   app.use(boomErrorHandler);
+  app.use(mongoErrorHandler);
   app.use(errorHandler);
 
   return app;
