@@ -6,19 +6,23 @@ const saveUser = async (newUser: CreateUserModel) => {
   return newUser;
 };
 
-const findUser = (filter: FilterUserModel = {}) => {
-  const user = userSchema.find(filter);
-  return user;
+const findUser = async (filter: FilterUserModel = {}): Promise<UserModel[]> => {
+  return await userSchema.find<UserModel>(filter);
 };
 
-const findUserById = (id: UserModel['_id']) => {
-  const user = userSchema.findById(id);
-  return user;
+const findUserById = async (id: UserModel['_id']): Promise<UserModel | null> => {
+  return await userSchema.findById<UserModel>(id);
 };
 
-const updateUser = (id: UserModel['_id'], preferences: UserModel['preferences']) => {
-  const updatedUser = userSchema.findByIdAndUpdate(id, { $set: { preferences } }, { new: true });
-  return updatedUser;
+const updateUser = async (
+  id: UserModel['_id'],
+  preferences: UserModel['preferences']
+): Promise<UserModel | null> => {
+  return await userSchema.findByIdAndUpdate<UserModel>(
+    id,
+    { $set: { preferences } },
+    { new: true }
+  );
 };
 
 export { saveUser, findUser, findUserById, updateUser };

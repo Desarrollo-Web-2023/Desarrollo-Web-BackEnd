@@ -17,7 +17,7 @@ const createUserService = async (newUser: CreateUserModel) => {
   return createdUser;
 };
 
-const getUserService = async (filter?: FilterUserModel) => {
+const getUserService = async (filter?: FilterUserModel): Promise<UserModel[]> => {
   if (filter?.preferences && Array.isArray(filter?.preferences))
     filter.preferences = { $in: filter?.preferences.map((word) => word.toLowerCase()) };
 
@@ -27,14 +27,17 @@ const getUserService = async (filter?: FilterUserModel) => {
   return user;
 };
 
-const getUserByIdService = async (id: UserModel['_id']) => {
+const getUserByIdService = async (id: UserModel['_id']): Promise<UserModel> => {
   const user = await findUserById(id);
   if (!user) throw Boom.notFound('User not found');
 
   return user;
 };
 
-const updateUserService = async (id: UserModel['_id'], preferences: UserModel['preferences']) => {
+const updateUserService = async (
+  id: UserModel['_id'],
+  preferences: UserModel['preferences']
+): Promise<UserModel> => {
   preferences = preferences.map((p) => p.toLowerCase());
   const updatedUser = await updateUser(id, preferences);
   if (!updatedUser) throw Boom.notFound('User not found');
