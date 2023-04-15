@@ -16,8 +16,16 @@ const findCollegiateBodyById = (id: CollegiateBodyModel['_id']) => {
   return collegiateBody;
 };
 
-const updateCollegiateBody = (id: CollegiateBodyModel['_id'], admins: CollegiateBodyModel['admins'], updated: CollegiateBodyModel['updated']) => {
-  const updatedCollegiateBody = collegiateBodySchema.findByIdAndUpdate(id, { $set: { admins, updated } }, { new: true });
+const updateCollegiateBody = (
+  id: CollegiateBodyModel['_id'],
+  admins: CollegiateBodyModel['admins'],
+  updated: CollegiateBodyModel['updated']
+) => {
+  const updatedCollegiateBody = collegiateBodySchema.findByIdAndUpdate(
+    id,
+    { $set: { admins, updated } },
+    { new: true }
+  );
   return updatedCollegiateBody;
 };
 

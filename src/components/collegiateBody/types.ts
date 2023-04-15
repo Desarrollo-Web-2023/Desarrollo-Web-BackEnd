@@ -38,8 +38,8 @@ interface UpdateCollegiateBodyRequest extends Request {
     id: string;
   };
   body: {
-    admins: string[],
-    updated: string,
+    admins: string[];
+    updated: string;
   };
 }
 

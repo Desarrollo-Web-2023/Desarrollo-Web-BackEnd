@@ -11,23 +11,28 @@ const createCollegiateBodyDto = Joi.object({
   name: name.required(),
   admins: admins.required(),
   created: created.required(),
-  updated: updated.required(),
+  updated: updated.required()
 });
 
 const filterCollegiateBodyDto = Joi.object({
   name,
   admins: admins.min(1),
   created,
-  updated,
+  updated
 });
 
 const updateCollegiateBodyDto = Joi.object({
   admins: admins.required(),
-  updated: updated.required(),
+  updated: updated.required()
 });
 
 const getCollegiateBodyByIdDto = Joi.object({
   id: _id
 });
 
-export { createCollegiateBodyDto, filterCollegiateBodyDto, getCollegiateBodyByIdDto, updateCollegiateBodyDto };
+export {
+  createCollegiateBodyDto,
+  filterCollegiateBodyDto,
+  getCollegiateBodyByIdDto,
+  updateCollegiateBodyDto
+};

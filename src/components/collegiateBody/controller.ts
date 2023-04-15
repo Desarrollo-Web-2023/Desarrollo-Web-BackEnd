@@ -13,7 +13,11 @@ import {
   UpdateCollegiateBodyRequest
 } from './types';
 
-const createCollegiateBody = async (req: CreateCollegiateBodyRequest, res: Response, next: NextFunction) => {
+const createCollegiateBody = async (
+  req: CreateCollegiateBodyRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const body = req.body;
     const createdCollegiateBody = await createCollegiateBodyService(body);
@@ -23,7 +27,11 @@ const createCollegiateBody = async (req: CreateCollegiateBodyRequest, res: Respo
   }
 };
 
-const getCollegiateBody = async (req: GetCollegiateBodyFilterRequest, res: Response, next: NextFunction) => {
+const getCollegiateBody = async (
+  req: GetCollegiateBodyFilterRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const collegiateBody = await getCollegiateBodyService(req.query);
     success(res, 200, 'Ok', collegiateBody);
@@ -32,7 +40,11 @@ const getCollegiateBody = async (req: GetCollegiateBodyFilterRequest, res: Respo
   }
 };
 
-const getCollegiateBodyById = async (req: GetCollegiateBodyByIdRequest, res: Response, next: NextFunction) => {
+const getCollegiateBodyById = async (
+  req: GetCollegiateBodyByIdRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const collegiateBody = await getCollegiateBodyByIdService(req.params.id);
     success(res, 200, 'Ok', collegiateBody);
@@ -41,9 +53,17 @@ const getCollegiateBodyById = async (req: GetCollegiateBodyByIdRequest, res: Res
   }
 };
 
-const updateCollegiateBody = async (req: UpdateCollegiateBodyRequest, res: Response, next: NextFunction) => {
+const updateCollegiateBody = async (
+  req: UpdateCollegiateBodyRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const updatedCollegiateBody = await updateCollegiateBodyService(req.params.id, req.body.admins, req.body.updated);
+    const updatedCollegiateBody = await updateCollegiateBodyService(
+      req.params.id,
+      req.body.admins,
+      req.body.updated
+    );
     success(res, 200, 'User update successful', updatedCollegiateBody);
   } catch (error) {
     next(error);

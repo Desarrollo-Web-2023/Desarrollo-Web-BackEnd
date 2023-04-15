@@ -1,22 +1,25 @@
 import Boom from '@hapi/boom';
-import { findCollegiateBody, findCollegiateBodyById, saveCollegiateBody, updateCollegiateBody } from './store';
+import {
+  findCollegiateBody,
+  findCollegiateBodyById,
+  saveCollegiateBody,
+  updateCollegiateBody
+} from './store';
 import { CreateCollegiateBodyModel, FilterCollegiateBodyModel, CollegiateBodyModel } from './types';
 
 const createCollegiateBodyService = async (newCollegiateBody: CreateCollegiateBodyModel) => {
   function capitalCase(name: string): string {
-    return name.toLowerCase()
-      .split(' ').map((word) => {
-         return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(' ');
+    return name
+      .toLowerCase()
+      .split(' ')
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
   }
-  newCollegiateBody.name = capitalCase(newCollegiateBody.name)
-  
+  newCollegiateBody.name = capitalCase(newCollegiateBody.name);
+
   newCollegiateBody.admins = newCollegiateBody.admins.map(capitalCase);
-
-  newCollegiateBody.created = newCollegiateBody.created
-
-  newCollegiateBody.updated = newCollegiateBody.updated
 
   const createdCollegiateBody = await saveCollegiateBody(newCollegiateBody);
   return createdCollegiateBody;
@@ -39,7 +42,11 @@ const getCollegiateBodyByIdService = async (id: CollegiateBodyModel['_id']) => {
   return collegiateBody;
 };
 
-const updateCollegiateBodyService = async (id: CollegiateBodyModel['_id'], admins: CollegiateBodyModel['admins'], updated: CollegiateBodyModel['updated']) => {
+const updateCollegiateBodyService = async (
+  id: CollegiateBodyModel['_id'],
+  admins: CollegiateBodyModel['admins'],
+  updated: CollegiateBodyModel['updated']
+) => {
   admins = admins.map((a) => a.toLowerCase());
   const updatedCollegiateBody = await updateCollegiateBody(id, admins, updated);
   if (!updatedCollegiateBody) throw Boom.notFound('Collegiate Body not found');
@@ -47,4 +54,9 @@ const updateCollegiateBodyService = async (id: CollegiateBodyModel['_id'], admin
   return updatedCollegiateBody;
 };
 
-export { createCollegiateBodyService, getCollegiateBodyService, getCollegiateBodyByIdService, updateCollegiateBodyService };
+export {
+  createCollegiateBodyService,
+  getCollegiateBodyService,
+  getCollegiateBodyByIdService,
+  updateCollegiateBodyService
+};
