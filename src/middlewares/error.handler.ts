@@ -21,4 +21,11 @@ const boomErrorHandler = (error: Boom.Boom, req: Request, res: Response, next: N
   next(error);
 };
 
-export { errorHandler, logErrors, boomErrorHandler };
+const mongoErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
+  if (error.stack?.match('MongoServerError: E11000')) {
+    return failure(res, 400, 'Class already exists', undefined);
+  }
+  next(error);
+};
+
+export { errorHandler, logErrors, boomErrorHandler, mongoErrorHandler };

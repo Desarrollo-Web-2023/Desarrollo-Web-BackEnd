@@ -4,7 +4,7 @@ import Boom from '@hapi/boom';
 import { config } from './config';
 
 const options: mongoose.ConnectOptions = {
-  dbName: 'PLANTIME'
+  dbName: 'DesarrolloWeb'
 };
 
 mongoose.set('strictQuery', false);
