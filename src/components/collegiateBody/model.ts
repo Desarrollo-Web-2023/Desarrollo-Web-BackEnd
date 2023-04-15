@@ -8,19 +8,12 @@ const schema = new Schema(
       //unique: true,
     },
     admins: {
-      type: [String],
-      required: true
-    },
-    created: {
-      type: String,
-      required: true
-    },
-    updated: {
-      type: String,
-      required: true
+      type: [mongoose.Types.ObjectId],
+      required: true,
+      ref: 'User'
     }
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 const collegiateBodySchema = mongoose.model('CollegiateBody', schema);

@@ -6,8 +6,6 @@ type CollegiateBodyModel = {
   _id: ObjectId | string;
   name: string;
   admins: string[];
-  created: string;
-  updated: string;
 };
 
 type CreateCollegiateBodyModel = Omit<CollegiateBodyModel, '_id'>;
@@ -15,8 +13,6 @@ type CreateCollegiateBodyModel = Omit<CollegiateBodyModel, '_id'>;
 type FilterCollegiateBodyModel = {
   name?: CollegiateBodyModel['name'];
   admins?: CollegiateBodyModel['admins'] | { $in: CollegiateBodyModel['admins'] };
-  created?: CollegiateBodyModel['created'];
-  updated?: CollegiateBodyModel['updated'];
 };
 
 interface CreateCollegiateBodyRequest extends Request {
@@ -39,7 +35,6 @@ interface UpdateCollegiateBodyRequest extends Request {
   };
   body: {
     admins: string[];
-    updated: string;
   };
 }
 
