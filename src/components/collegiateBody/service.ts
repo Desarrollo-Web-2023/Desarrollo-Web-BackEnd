@@ -25,9 +25,7 @@ const createCollegiateBodyService = async (newCollegiateBody: CreateCollegiateBo
   }
   newCollegiateBody.name = capitalCase(newCollegiateBody.name);
 
-  newCollegiateBody.admins.forEach(async (id) => {
-    await getUserByIdService(id);
-  });
+  await Promise.all(newCollegiateBody.admins.map(async (id) => await getUserByIdService(id)));
 
   const createdCollegiateBody = await saveCollegiateBody(newCollegiateBody);
   return createdCollegiateBody;
@@ -39,6 +37,7 @@ const createCollegiateBodyService = async (newCollegiateBody: CreateCollegiateBo
  * @returns list of found collegiate body objects
  */
 const getCollegiateBodyService = async (filter?: FilterCollegiateBodyModel) => {
+  if (filter?.admins && Array.isArray(filter?.admins)) filter.admins = { $in: filter?.admins };
   const collegiateBody = await findCollegiateBody(filter);
   if (!collegiateBody) throw Boom.notFound('Collegiate Body not found');
 
@@ -67,6 +66,8 @@ const updateCollegiateBodyService = async (
   id: CollegiateBodyModel['_id'],
   admins: CollegiateBodyModel['admins']
 ) => {
+  await Promise.all(admins.map(async (id) => await getUserByIdService(id)));
+
   const updatedCollegiateBody = await updateCollegiateBody(id, admins);
   if (!updatedCollegiateBody) throw Boom.notFound('Collegiate Body not found');
 

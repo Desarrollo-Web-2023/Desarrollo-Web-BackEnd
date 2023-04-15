@@ -3,7 +3,7 @@ import Joi from 'joi';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const _id = Joi.string().alphanum().length(24);
 const name = Joi.string().regex(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/);
-const admins = Joi.array().items(Joi.string());
+const admins = Joi.array().items(_id);
 
 const createCollegiateBodyDto = Joi.object({
   name: name.required(),

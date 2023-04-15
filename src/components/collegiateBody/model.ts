@@ -7,11 +7,13 @@ const schema = new Schema(
       required: true
       //unique: true,
     },
-    admins: {
-      type: [mongoose.Types.ObjectId],
-      required: true,
-      ref: 'User'
-    }
+    admins: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: true
+      }
+    ]
   },
   { versionKey: false, timestamps: true }
 );
