@@ -2,25 +2,13 @@ name: CI workflows
 run-name: Push to ${{ github.ref_name }} by @${{ github.actor }}
 
 on:
-  push:
-    branches-ignore:
-      - 'main'
+  push
 
 jobs:
   ci:
     runs-on: ubuntu-latest
     container:
       image: node:18
-
-    # services:
-    #   mongo-e2e:
-    #     image: mongo
-    #     ports:
-    #       - 27017:27017
-    #     env:
-    #       MONGO_INITDB_ROOT_USERNAME: TESTUSER
-    #       MONGO_INITDB_ROOT_PASSWORD: TESTUSER
-    #       MONGO_INITDB_DATABASE: PLANTIME
 
     steps:
       - name: Checkout
@@ -31,15 +19,3 @@ jobs:
       - name: run eslint
         shell: bash
         run: npm run lint
-      - name: run unit
-        shell: bash
-        run: npm run test:unit
-      # - name: run e2e
-      #   shell: bash
-      #   run: npm run test:e2e
-      #   env:
-      #     NODE_ENV: dev
-      #     PORT: 3000
-      #     API_KEY: dev
-      #     DB_CNN: mongodb://TESTUSER:TESTUSER@mongo-e2e/?authMechanism=DEFAULT
-      #     JWT_SECRET: GOODSECRETñ
