@@ -1,12 +1,9 @@
 import Boom from '@hapi/boom';
-import {
-  findCollegiateBody,
-  findCollegiateBodyById,
-  saveCollegiateBody,
-  updateCollegiateBody
-} from './store';
+
 import { CreateCollegiateBodyModel, FilterCollegiateBodyModel, CollegiateBodyModel } from './types';
+import { find, findById, save, update } from './store';
 import { getUserByIdService } from '../user/service';
+import { capitalCase } from '../../utils/helpers';
 
 /**
  * create collegiate body
@@ -14,20 +11,11 @@ import { getUserByIdService } from '../user/service';
  * @returns collegiate body created
  */
 const createCollegiateBodyService = async (newCollegiateBody: CreateCollegiateBodyModel) => {
-  function capitalCase(name: string): string {
-    return name
-      .toLowerCase()
-      .split(' ')
-      .map((word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
-      .join(' ');
-  }
   newCollegiateBody.name = capitalCase(newCollegiateBody.name);
 
   await Promise.all(newCollegiateBody.admins.map(async (id) => await getUserByIdService(id)));
 
-  const createdCollegiateBody = await saveCollegiateBody(newCollegiateBody);
+  const createdCollegiateBody = await save(newCollegiateBody);
   return createdCollegiateBody;
 };
 
@@ -38,7 +26,7 @@ const createCollegiateBodyService = async (newCollegiateBody: CreateCollegiateBo
  */
 const getCollegiateBodyService = async (filter?: FilterCollegiateBodyModel) => {
   if (filter?.admins && Array.isArray(filter?.admins)) filter.admins = { $in: filter?.admins };
-  const collegiateBody = await findCollegiateBody(filter);
+  const collegiateBody = await find(filter);
   if (!collegiateBody) throw Boom.notFound('Collegiate Body not found');
 
   return collegiateBody;
@@ -50,7 +38,7 @@ const getCollegiateBodyService = async (filter?: FilterCollegiateBodyModel) => {
  * @returns collegiate body object found
  */
 const getCollegiateBodyByIdService = async (id: CollegiateBodyModel['_id']) => {
-  const collegiateBody = await findCollegiateBodyById(id);
+  const collegiateBody = await findById(id);
   if (!collegiateBody) throw Boom.notFound('Collegiate Body not found');
 
   return collegiateBody;
@@ -68,7 +56,7 @@ const updateCollegiateBodyService = async (
 ) => {
   await Promise.all(admins.map(async (id) => await getUserByIdService(id)));
 
-  const updatedCollegiateBody = await updateCollegiateBody(id, admins);
+  const updatedCollegiateBody = await update(id, admins);
   if (!updatedCollegiateBody) throw Boom.notFound('Collegiate Body not found');
 
   return updatedCollegiateBody;

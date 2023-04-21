@@ -1,6 +1,7 @@
 import Boom from '@hapi/boom';
 import { findUser, findUserById, saveUser, updateUser } from './store';
 import { CreateUserModel, FilterUserModel, UserModel } from './types';
+import { capitalCase } from '../../utils/helpers';
 
 /**
  * Create new user
@@ -8,13 +9,7 @@ import { CreateUserModel, FilterUserModel, UserModel } from './types';
  * @returns Created user
  */
 const createUserService = async (newUser: CreateUserModel) => {
-  newUser.name = newUser.name
-    .toLowerCase()
-    .split(' ')
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(' ');
+  newUser.name = capitalCase(newUser.name);
 
   newUser.preferences = newUser.preferences.map((word) => word.toLowerCase());
 

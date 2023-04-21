@@ -1,9 +1,8 @@
 import { Request } from 'express';
-import { ObjectId } from 'mongoose';
 
 type CollegiateBodyModel = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  _id: ObjectId | string;
+  _id: string;
   name: string;
   admins: string[];
 };
