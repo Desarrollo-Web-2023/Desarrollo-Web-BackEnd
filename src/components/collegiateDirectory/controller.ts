@@ -1,6 +1,11 @@
 import { NextFunction, Response } from 'express';
 
-import { createColDirService, getColDirByidService, getColDirService } from './service';
+import {
+  createColDirService,
+  getColDirByidService,
+  getColDirService,
+  deactivateColDirService
+} from './service';
 import { success } from '../../utils/response';
 import {
   ColDirModel,
@@ -36,13 +41,13 @@ const getColDirById = async (req: GetColDirByIdRequest, res: Response, next: Nex
   }
 };
 
-const updateColDir = async (req: UpdateColDirRequest, res: Response, next: NextFunction) => {
+const deactivateColDir = async (req: GetColDirByIdRequest, res: Response, next: NextFunction) => {
   try {
-    const updatedColDir: ColDirModel = await updateColDirService(req.params.id, req.body);
+    const updatedColDir: ColDirModel = await deactivateColDirService(req.params.id);
     success(res, 200, 'Collegiate directory updated successfully', updatedColDir);
   } catch (error) {
     next(error);
   }
 };
 
-export { createColDir, getColDir, getColDirById };
+export { createColDir, getColDir, getColDirById, deactivateColDir };

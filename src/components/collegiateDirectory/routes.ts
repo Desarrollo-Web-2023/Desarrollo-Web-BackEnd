@@ -1,19 +1,14 @@
 import express from 'express';
 
-import { createColDirDto, filterColDirDto, getColDirByIdDto, updateColDirDto } from './joiSchema';
+import { createColDirDto, filterColDirDto, getColDirByIdDto } from './joiSchema';
 import { validatorHandler } from '../../middlewares/validator.handler';
-import { createColDir, getColDir, getColDirById } from './controller';
+import { createColDir, getColDir, getColDirById, deactivateColDir } from './controller';
 
 const colDirRouter = express.Router();
 
 colDirRouter.post('/', validatorHandler(createColDirDto, 'body'), createColDir);
 colDirRouter.get('/', validatorHandler(filterColDirDto, 'query'), getColDir);
 colDirRouter.get('/:id', validatorHandler(getColDirByIdDto, 'params'), getColDirById);
-colDirRouter.patch(
-  '/:id',
-  validatorHandler(getColDirByIdDto, 'params'),
-  validatorHandler(updateColDirDto, 'body'),
-  updateColDir
-);
+colDirRouter.delete('/:id', validatorHandler(getColDirByIdDto, 'params'), deactivateColDir);
 
 export { colDirRouter };

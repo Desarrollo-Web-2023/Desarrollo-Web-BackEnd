@@ -56,6 +56,9 @@ interface UpdateColDirRequest extends Request {
   params: {
     id: ColDirModel['_id'];
   };
+  body: {
+    isActive: ColDirModel['isActive'];
+  };
 }
 
 export {
@@ -66,5 +69,6 @@ export {
   FilterColDirModel,
   FilterColDirRequest,
   ProjectionsColDirModel,
-  GetColDirByIdRequest
+  GetColDirByIdRequest,
+  UpdateColDirRequest
 };

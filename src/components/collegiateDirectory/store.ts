@@ -17,4 +17,13 @@ const findById = async (id: ColDirModel['_id']): Promise<ColDirModel | null> => 
   return await colDirSchema.findById(id);
 };
 
-export { save, find, findById };
+const deactivate = async (id: ColDirModel['_id']) => {
+  const updatedColDir = await colDirSchema.findByIdAndUpdate<ColDirModel>(
+    id,
+    { $set: { isActive: false } },
+    { new: true, projection: { createdAt: 0, updatedAt: 0 } }
+  );
+  return updatedColDir;
+};
+
+export { save, find, findById, deactivate };
