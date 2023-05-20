@@ -32,12 +32,11 @@ const schema = new Schema(
     keywords: [
       {
         word: String,
-        frequency: Number,
-        required: true
+        frequency: Number
       }
     ],
     body: {
-      type: String,
+      type: Buffer,
       required: true
     }
   },
