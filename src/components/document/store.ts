@@ -1,4 +1,9 @@
-import { CreateDocumentModel, DocumentProjectionModel, FoundDocumentByWordModel } from './types';
+import {
+  CompleteDocumentModel,
+  CreateDocumentModel,
+  DocumentProjectionModel,
+  FoundDocumentByWordModel
+} from './types';
 import { documentSchema } from './model';
 
 const save = async (
@@ -38,4 +43,11 @@ const find = async (
   ]);
 };
 
-export { save, find };
+const findById = async (
+  id: CompleteDocumentModel['_id'],
+  projection: DocumentProjectionModel = { createdAt: 0, updatedAt: 0 }
+) => {
+  return await documentSchema.findById(id, projection);
+};
+
+export { save, find, findById };

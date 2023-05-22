@@ -2,6 +2,7 @@ import Boom from '@hapi/boom';
 import { findUser, findUserById, saveUser, updateUser } from './store';
 import { CreateUserModel, FilterUserModel, UserModel } from './types';
 import { capitalCase } from '../../utils/helpers';
+import { saveAuthUser } from '../auth/store';
 
 /**
  * Create new user
@@ -13,7 +14,14 @@ const createUserService = async (newUser: CreateUserModel) => {
 
   newUser.preferences = newUser.preferences.map((word) => word.toLowerCase());
 
-  const createdUser = await saveUser(newUser);
+  await saveUser(newUser);
+  const createdUser = (await findUser({ email: newUser.email }))[0];
+  await saveAuthUser({
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    _id: createdUser._id,
+    email: createdUser.email,
+    password: newUser.password
+  });
   return createdUser;
 };
 

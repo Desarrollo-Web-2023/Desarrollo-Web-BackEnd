@@ -1,7 +1,8 @@
 import express from 'express';
-import { validatorHandler } from '../../middlewares/validator.handler';
+
 import { createUserDto, filterUserDto, getUserByIdDto, updateUserDto } from './joiSchema';
 import { createUser, getUser, getUserById, updateUser } from './controller';
+import { validatorHandler } from '../../middlewares/validator.handler';
 
 const userRouter = express.Router();
 

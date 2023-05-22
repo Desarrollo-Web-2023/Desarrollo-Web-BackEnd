@@ -10,7 +10,7 @@ const schema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: /^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
+      match: /^[\w.%+-]+@unal.edu.co$/
     },
     preferences: {
       type: [String],

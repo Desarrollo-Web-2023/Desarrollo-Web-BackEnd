@@ -4,10 +4,12 @@ const schema = new Schema(
   {
     collegiateBody: {
       type: mongoose.Types.ObjectId,
+      ref: 'CollegiateBody',
       required: true
     },
     user: {
       type: mongoose.Types.ObjectId,
+      ref: 'User',
       requried: true
     },
     isActive: {
