@@ -20,4 +20,8 @@ const getDocumentByWordDto = Joi.object({
   words: Joi.array().items(Joi.string()).required()
 });
 
-export { createDocumentDto, getDocumentByWordDto };
+const getDocumentByIdDto = Joi.object({
+  id: Joi.string().length(24)
+});
+
+export { createDocumentDto, getDocumentByWordDto, getDocumentByIdDto };

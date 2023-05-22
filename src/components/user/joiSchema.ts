@@ -4,11 +4,13 @@ import Joi from 'joi';
 const _id = Joi.string().alphanum().length(24);
 const name = Joi.string().regex(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/);
 const email = Joi.string().email();
+const password = Joi.string();
 const preferences = Joi.array().items(Joi.string()).min(3);
 
 const createUserDto = Joi.object({
   name: name.required(),
   email: email.required(),
+  password: password.required(),
   preferences: preferences.required()
 });
 

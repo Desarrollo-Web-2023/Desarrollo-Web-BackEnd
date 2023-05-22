@@ -2,8 +2,8 @@ import Boom from '@hapi/boom';
 import fs from 'fs';
 
 import { extractContent, frequency } from './helper';
-import { CreateDocumentModel } from './types';
-import { find, save } from './store';
+import { CompleteDocumentModel, CreateDocumentModel } from './types';
+import { find, findById, save } from './store';
 
 const createDocumentServie = async (basicInfo: CreateDocumentModel, path: string) => {
   try {
@@ -29,4 +29,13 @@ const getDocumentByWordService = async (words: string[]) => {
   return documentsFound;
 };
 
-export { createDocumentServie, getDocumentByWordService };
+const getDocumentByIdService = async (id: CompleteDocumentModel['_id']) => {
+  const documentFound = await findById(id);
+  if (!documentFound) {
+    throw Boom.badRequest('Document not found');
+  }
+
+  return documentFound;
+};
+
+export { createDocumentServie, getDocumentByWordService, getDocumentByIdService };

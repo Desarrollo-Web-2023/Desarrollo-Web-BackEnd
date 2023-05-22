@@ -1,6 +1,8 @@
 import { Request } from 'express';
 
 type CompleteDocumentModel = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _id: string;
   title: string;
   type: string;
   collegiateBodies: string;
@@ -33,7 +35,13 @@ type DocumentProjectionModel = {
 
 type CreateDocumentModel = Pick<
   CompleteDocumentModel,
-  'title' | 'type' | 'collegiateBodies' | 'publicationDate' | 'entryIntoForce' | 'expeditionDate'
+  | 'title'
+  | 'type'
+  | 'collegiateBodies'
+  | 'publicationDate'
+  | 'entryIntoForce'
+  | 'expeditionDate'
+  | '_id'
 >;
 
 interface CreateDocumentRequest extends Request {
@@ -68,6 +76,12 @@ type FoundDocumentByWordModel = {
   expeditionDate: Date;
 };
 
+interface GetDocumentByIdRequest extends Request {
+  params: {
+    id: CompleteDocumentModel['_id'];
+  };
+}
+
 export {
   CompleteDocumentModel,
   LegalDocument,
@@ -77,5 +91,6 @@ export {
   DocumentProjectionModel,
   GetDocumentByWordModel,
   GetDocumentByWordRequest,
-  FoundDocumentByWordModel
+  FoundDocumentByWordModel,
+  GetDocumentByIdRequest
 };

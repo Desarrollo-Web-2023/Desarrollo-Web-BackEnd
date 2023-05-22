@@ -1,11 +1,11 @@
 import { Request } from 'express';
-import { ObjectId } from 'mongoose';
 
 type UserModel = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  _id: ObjectId | string;
+  _id: string;
   name: string;
   email: string;
+  password: string;
   preferences: string[];
 };
 
