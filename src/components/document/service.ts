@@ -2,7 +2,7 @@ import Boom from '@hapi/boom';
 import fs from 'fs';
 
 import { extractContent, frequency } from './helper';
-import { CompleteDocumentModel, CreateDocumentModel } from './types';
+import { CompleteDocumentModel, CreateDocumentModel, GetDocumentByQueryModel } from './types';
 import { find, findById, save } from './store';
 
 const createDocumentServie = async (basicInfo: CreateDocumentModel, path: string) => {
@@ -17,8 +17,9 @@ const createDocumentServie = async (basicInfo: CreateDocumentModel, path: string
   }
 };
 
-const getDocumentByWordService = async (words: string[]) => {
-  const documentsFound = await find(words, {
+const getDocumentByQueryService = async (query: GetDocumentByQueryModel) => {
+  if (query.word) query.word = query.word.toLowerCase();
+  const documentsFound = await find(query, {
     title: 1,
     type: 1,
     collegiateBodies: 1,
@@ -38,4 +39,4 @@ const getDocumentByIdService = async (id: CompleteDocumentModel['_id']) => {
   return documentFound;
 };
 
-export { createDocumentServie, getDocumentByWordService, getDocumentByIdService };
+export { createDocumentServie, getDocumentByQueryService, getDocumentByIdService };

@@ -16,12 +16,16 @@ const createDocumentDto = Joi.object({
   expeditionDate: expeditionDate.required()
 });
 
-const getDocumentByWordDto = Joi.object({
-  words: Joi.array().items(Joi.string()).required()
-});
+const getDocumentByQueryDto = Joi.object({
+  words: Joi.array().items(Joi.string()),
+  word: Joi.string(),
+  type,
+  year: Joi.string().regex(/^\d{4}$/),
+  collegiateBodies: Joi.string().hex().length(24)
+}).min(1);
 
 const getDocumentByIdDto = Joi.object({
   id: Joi.string().length(24)
 });
 
-export { createDocumentDto, getDocumentByWordDto, getDocumentByIdDto };
+export { createDocumentDto, getDocumentByQueryDto, getDocumentByIdDto };

@@ -57,12 +57,16 @@ interface DocumentI {
 
 type LegalDocument = Omit<CompleteDocumentModel, 'createdAt' | 'updatedAt'>;
 
-type GetDocumentByWordModel = {
-  words: string[];
+type GetDocumentByQueryModel = {
+  words?: string[];
+  word?: string;
+  type?: string;
+  year?: string;
+  collegiateBodies?: string;
 };
 
-interface GetDocumentByWordRequest extends Request {
-  query: GetDocumentByWordModel;
+interface GetDocumentByQueryRequest extends Request {
+  query: GetDocumentByQueryModel;
 }
 
 type FoundDocumentByWordModel = {
@@ -89,8 +93,8 @@ export {
   CreateDocumentModel,
   CreateDocumentRequest,
   DocumentProjectionModel,
-  GetDocumentByWordModel,
-  GetDocumentByWordRequest,
+  GetDocumentByQueryModel,
+  GetDocumentByQueryRequest,
   FoundDocumentByWordModel,
   GetDocumentByIdRequest
 };

@@ -9,10 +9,10 @@ const save = async (newColDir: CreateColDirModel): Promise<CreateColDirModel> =>
 const find = async (
   filter: FilterColDirModel = { isActive: true },
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  projections: ProjectionsColDirModel = { createdAt: 0, updatedAt: 0, _id: 0, user: 0 }
+  projections: ProjectionsColDirModel = { createdAt: 0, updatedAt: 0, user: 0 }
 ): Promise<ColDirModel[]> => {
   return await colDirSchema.find(filter, projections).populate({
-    path: 'CollegiateBody',
+    path: 'collegiateBody',
     select: 'name'
   });
 };

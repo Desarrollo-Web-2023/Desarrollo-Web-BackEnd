@@ -5,9 +5,9 @@ import {
   CreateDocumentRequest,
   DocumentI,
   GetDocumentByIdRequest,
-  GetDocumentByWordRequest
+  GetDocumentByQueryRequest
 } from './types';
-import { createDocumentServie, getDocumentByIdService, getDocumentByWordService } from './service';
+import { createDocumentServie, getDocumentByIdService, getDocumentByQueryService } from './service';
 import { success } from '../../utils/response';
 
 const createDocument = async (req: CreateDocumentRequest, res: Response, next: NextFunction) => {
@@ -23,13 +23,13 @@ const createDocument = async (req: CreateDocumentRequest, res: Response, next: N
   }
 };
 
-const getDocumentByWord = async (
-  req: GetDocumentByWordRequest,
+const getDocumentByQuery = async (
+  req: GetDocumentByQueryRequest,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const documentsFound = await getDocumentByWordService(req.query.words);
+    const documentsFound = await getDocumentByQueryService(req.query);
     success(res, 200, 'Ok', documentsFound);
   } catch (error) {
     next(error);
@@ -45,4 +45,4 @@ const getDocumentById = async (req: GetDocumentByIdRequest, res: Response, next:
   }
 };
 
-export { createDocument, getDocumentByWord, getDocumentById };
+export { createDocument, getDocumentByQuery, getDocumentById };
