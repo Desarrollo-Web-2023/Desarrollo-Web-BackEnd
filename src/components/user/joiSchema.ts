@@ -24,8 +24,13 @@ const updateUserDto = Joi.object({
   preferences: preferences.required()
 });
 
+const saveDocUserDto = Joi.object({
+  doc: _id.required(),
+  mode: Joi.string().valid('push', 'pull')
+});
+
 const getUserByIdDto = Joi.object({
   id: _id
 });
 
-export { createUserDto, filterUserDto, getUserByIdDto, updateUserDto };
+export { createUserDto, filterUserDto, getUserByIdDto, updateUserDto, saveDocUserDto };
