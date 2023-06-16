@@ -3,6 +3,7 @@ import {
   createUserService,
   getUserByIdService,
   getUserService,
+  pushOrPullDocUserService,
   updateUserService
 } from './service';
 import { success } from '../../utils/response';
@@ -10,6 +11,7 @@ import {
   CreateUserRequest,
   GetUserByIdRequest,
   GetUserFilterRequest,
+  SaveDocUserRequest,
   UpdateUserRequest
 } from './types';
 
@@ -67,4 +69,18 @@ const updateUser = async (req: UpdateUserRequest, res: Response, next: NextFunct
   }
 };
 
-export { createUser, getUser, getUserById, updateUser };
+/**
+ * Update pull or push docs user by id
+ * @param req.params.id Id to update an user
+ * @param req.body.doc New document to save in the list of saved documents
+ */
+const pushOrPullDocUser = async (req: SaveDocUserRequest, res: Response, next: NextFunction) => {
+  try {
+    const updatedUser = await pushOrPullDocUserService(req.params.id, req.body.doc, req.body.mode);
+    success(res, 200, 'Doc saved successful', updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { createUser, getUser, getUserById, updateUser, pushOrPullDocUser };

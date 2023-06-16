@@ -1,5 +1,5 @@
 import Boom from '@hapi/boom';
-import { findUser, findUserById, saveUser, updateUser } from './store';
+import { findUser, findUserById, pushDocUser, pullDocUser, saveUser, updateUser } from './store';
 import { CreateUserModel, FilterUserModel, UserModel } from './types';
 import { capitalCase } from '../../utils/helpers';
 import { saveAuthUser } from '../auth/store';
@@ -69,4 +69,32 @@ const updateUserService = async (
   return updatedUser;
 };
 
-export { createUserService, getUserService, getUserByIdService, updateUserService };
+/**
+ * Update push or pull docs user by id
+ * @param id Id to update an user
+ * @param doc New document to save in the list of saved documents
+ * @returns Updated user
+ */
+const pushOrPullDocUserService = async (
+  id: UserModel['_id'],
+  doc: UserModel['_id'],
+  mode: 'push' | 'pull' = 'push'
+): Promise<UserModel> => {
+  let updatedUser: UserModel | null = null;
+  if (mode === 'push') {
+    updatedUser = await pushDocUser(id, doc);
+  } else if (mode === 'pull') {
+    updatedUser = await pullDocUser(id, doc);
+  }
+  if (!updatedUser) throw Boom.notFound('User not found');
+
+  return updatedUser;
+};
+
+export {
+  createUserService,
+  getUserService,
+  getUserByIdService,
+  updateUserService,
+  pushOrPullDocUserService
+};

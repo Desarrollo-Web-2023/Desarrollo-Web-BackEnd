@@ -21,7 +21,16 @@ const schema = new Schema(
         'Should have 3 elements'
       ],
       required: true
-    }
+    },
+    saved: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'Document',
+        required: false,
+        unique: true,
+        default: []
+      }
+    ]
   },
   { versionKey: false }
 );

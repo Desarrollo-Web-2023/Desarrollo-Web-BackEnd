@@ -38,6 +38,16 @@ interface UpdateUserRequest extends Request {
   body: Pick<UserModel, 'preferences'>;
 }
 
+interface SaveDocUserRequest extends Request {
+  params: {
+    id: string;
+  };
+  body: {
+    doc: string;
+    mode: 'push' | 'pull';
+  };
+}
+
 export {
   UserModel,
   CreateUserModel,
@@ -45,5 +55,6 @@ export {
   FilterUserModel,
   GetUserFilterRequest,
   GetUserByIdRequest,
-  UpdateUserRequest
+  UpdateUserRequest,
+  SaveDocUserRequest
 };
