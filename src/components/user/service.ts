@@ -1,6 +1,8 @@
 import Boom from '@hapi/boom';
-import { findUser, findUserById, saveUser, updateUser } from './store';
+import { findUser, findUserById, pushDocUser, pullDocUser, saveUser, updateUser } from './store';
 import { CreateUserModel, FilterUserModel, UserModel } from './types';
+import { capitalCase } from '../../utils/helpers';
+import { saveAuthUser } from '../auth/store';
 
 /**
  * Create new user
@@ -8,17 +10,18 @@ import { CreateUserModel, FilterUserModel, UserModel } from './types';
  * @returns Created user
  */
 const createUserService = async (newUser: CreateUserModel) => {
-  newUser.name = newUser.name
-    .toLowerCase()
-    .split(' ')
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(' ');
+  newUser.name = capitalCase(newUser.name);
 
   newUser.preferences = newUser.preferences.map((word) => word.toLowerCase());
 
-  const createdUser = await saveUser(newUser);
+  await saveUser(newUser);
+  const createdUser = (await findUser({ email: newUser.email }))[0];
+  await saveAuthUser({
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    _id: createdUser._id,
+    email: createdUser.email,
+    password: newUser.password
+  });
   return createdUser;
 };
 
@@ -66,4 +69,32 @@ const updateUserService = async (
   return updatedUser;
 };
 
-export { createUserService, getUserService, getUserByIdService, updateUserService };
+/**
+ * Update push or pull docs user by id
+ * @param id Id to update an user
+ * @param doc New document to save in the list of saved documents
+ * @returns Updated user
+ */
+const pushOrPullDocUserService = async (
+  id: UserModel['_id'],
+  doc: UserModel['_id'],
+  mode: 'push' | 'pull' = 'push'
+): Promise<UserModel> => {
+  let updatedUser: UserModel | null = null;
+  if (mode === 'push') {
+    updatedUser = await pushDocUser(id, doc);
+  } else if (mode === 'pull') {
+    updatedUser = await pullDocUser(id, doc);
+  }
+  if (!updatedUser) throw Boom.notFound('User not found');
+
+  return updatedUser;
+};
+
+export {
+  createUserService,
+  getUserService,
+  getUserByIdService,
+  updateUserService,
+  pushOrPullDocUserService
+};

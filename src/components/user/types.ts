@@ -1,11 +1,11 @@
 import { Request } from 'express';
-import { ObjectId } from 'mongoose';
 
 type UserModel = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  _id: ObjectId | string;
+  _id: string;
   name: string;
   email: string;
+  password: string;
   preferences: string[];
 };
 
@@ -38,6 +38,16 @@ interface UpdateUserRequest extends Request {
   body: Pick<UserModel, 'preferences'>;
 }
 
+interface SaveDocUserRequest extends Request {
+  params: {
+    id: string;
+  };
+  body: {
+    doc: string;
+    mode: 'push' | 'pull';
+  };
+}
+
 export {
   UserModel,
   CreateUserModel,
@@ -45,5 +55,6 @@ export {
   FilterUserModel,
   GetUserFilterRequest,
   GetUserByIdRequest,
-  UpdateUserRequest
+  UpdateUserRequest,
+  SaveDocUserRequest
 };

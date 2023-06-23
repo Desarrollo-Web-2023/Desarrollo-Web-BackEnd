@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "start:pm2": "pm2 dist/index.js",
-    "build": "npm run build:wp",
+    "build": "npm run build:wp && npm run start",
     "dev": "nodemon",
     "prod": "node dist/index.js",
     "build:ts": "npx tsc",
@@ -34,11 +34,14 @@
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.15",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/morgan": "^1.9.4",
+    "@types/multer": "^1.4.7",
     "@types/node": "^18.11.18",
+    "@types/pdf-parse": "^1.1.1",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.0",
     "clean-webpack-plugin": "^4.0.0",
@@ -56,6 +59,7 @@
   },
   "dependencies": {
     "@hapi/boom": "^10.0.0",
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -63,6 +67,8 @@
     "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "pdf-parse": "^1.1.1"
   }
 }

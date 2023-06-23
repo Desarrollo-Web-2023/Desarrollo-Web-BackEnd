@@ -25,4 +25,26 @@ const updateUser = async (
   );
 };
 
-export { saveUser, findUser, findUserById, updateUser };
+const pushDocUser = async (
+  id: UserModel['_id'],
+  doc: UserModel['_id']
+): Promise<UserModel | null> => {
+  return await userSchema.findByIdAndUpdate<UserModel>(
+    id,
+    { $push: { saved: doc } },
+    { new: true }
+  );
+};
+
+const pullDocUser = async (
+  id: UserModel['_id'],
+  doc: UserModel['_id']
+): Promise<UserModel | null> => {
+  return await userSchema.findByIdAndUpdate<UserModel>(
+    id,
+    { $pull: { saved: doc } },
+    { new: true }
+  );
+};
+
+export { saveUser, findUser, findUserById, updateUser, pushDocUser, pullDocUser };

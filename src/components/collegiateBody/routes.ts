@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { validatorHandler } from '../../middlewares/validator.handler';
 import {
   createCollegiateBodyDto,

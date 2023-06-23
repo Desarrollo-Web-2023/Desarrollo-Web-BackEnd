@@ -10,7 +10,7 @@ const schema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: /^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
+      match: /^[\w.%+-]+@unal.edu.co$/
     },
     preferences: {
       type: [String],
@@ -21,7 +21,16 @@ const schema = new Schema(
         'Should have 3 elements'
       ],
       required: true
-    }
+    },
+    saved: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'Document',
+        required: false,
+        unique: true,
+        default: []
+      }
+    ]
   },
   { versionKey: false }
 );

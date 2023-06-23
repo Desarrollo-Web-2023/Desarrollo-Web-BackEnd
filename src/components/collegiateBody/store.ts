@@ -1,14 +1,12 @@
-import { collegiateBodySchema } from './model';
 import { CreateCollegiateBodyModel, FilterCollegiateBodyModel, CollegiateBodyModel } from './types';
+import { collegiateBodySchema } from './model';
 
-const saveCollegiateBody = async (newCollegiateBody: CreateCollegiateBodyModel) => {
+const save = async (newCollegiateBody: CreateCollegiateBodyModel) => {
   await collegiateBodySchema.create(newCollegiateBody);
   return newCollegiateBody;
 };
 
-const findCollegiateBody = async (
-  filter: FilterCollegiateBodyModel = {}
-): Promise<CollegiateBodyModel[]> => {
+const find = async (filter: FilterCollegiateBodyModel = {}): Promise<CollegiateBodyModel[]> => {
   const collegiateBody = await collegiateBodySchema
     .find<CollegiateBodyModel>(filter, {
       createdAt: 0,
@@ -21,9 +19,7 @@ const findCollegiateBody = async (
   return collegiateBody;
 };
 
-const findCollegiateBodyById = async (
-  id: CollegiateBodyModel['_id']
-): Promise<CollegiateBodyModel | null> => {
+const findById = async (id: CollegiateBodyModel['_id']): Promise<CollegiateBodyModel | null> => {
   const collegiateBody = await collegiateBodySchema
     .findById<CollegiateBodyModel>(id, {
       createdAt: 0,
@@ -36,7 +32,7 @@ const findCollegiateBodyById = async (
   return collegiateBody;
 };
 
-const updateCollegiateBody = async (
+const update = async (
   id: CollegiateBodyModel['_id'],
   admins: CollegiateBodyModel['admins']
 ): Promise<CollegiateBodyModel | null> => {
@@ -53,4 +49,4 @@ const updateCollegiateBody = async (
   return updatedCollegiateBody;
 };
 
-export { saveCollegiateBody, findCollegiateBody, findCollegiateBodyById, updateCollegiateBody };
+export { save, find, findById, update };
